@@ -1,3 +1,12 @@
+Họ và tên: Phan Thúy Ngọc
+Mã sinh viên: 231402307
+Lớp: Kỹ sư Kỹ Thuật Viễn Thông - K64
+Trường: Trường Đại học Giao thông vận tải
+Tên đề tài: Thiết kế mạch báo cháy gia đình sử dụng ESP32 và FreeRTOS.
+Link project Wokwi: https://wokwi.com/projects/480671976602584065
+Link Website : http://127.0.0.1:5500/index.html
+
+
 Đề 3.
 Thiết kế Mạch báo cháy gia đình bằng việc phát hiện khí gas/khói và nhiệt độ. Mạch 
 báo cháy sử dụng ESP32 đọc dữ liệu nồng độ khí gas/khói từ cảm biến MQ2 và nhiệt 
