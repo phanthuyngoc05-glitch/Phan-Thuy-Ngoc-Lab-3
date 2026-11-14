@@ -1,0 +1,268 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #eef3f8;
+    color: #263449;
+}
+
+.dashboard {
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+    background: #182338;
+    color: white;
+    text-align: center;
+    padding: 22px 10px;
+}
+
+.header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.header p {
+    color: #b9c8df;
+    font-size: 14px;
+}
+
+/* CONTAINER */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* TRẠNG THÁI */
+.status-card,
+.sensor-card,
+.chart-card,
+.control-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.status-card {
+    margin-bottom: 18px;
+}
+
+.status-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    background: #e5e7eb;
+    color: #475569;
+}
+
+.online {
+    background: #d1fae5;
+    color: #047857;
+}
+
+.offline {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.alert {
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.alert.normal {
+    background: #d1fae5;
+    color: #047857;
+}
+
+.alert.danger {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+/* CẢM BIẾN */
+.sensor-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.sensor-card {
+    min-height: 160px;
+}
+
+.sensor-card h3 {
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+.sensor-value {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.gas-value {
+    color: #e98200;
+}
+
+.temp-value {
+    color: #dc2626;
+}
+
+.humidity-value {
+    color: #2563eb;
+}
+
+.alarm-value {
+    color: #dc2626;
+    font-size: 22px;
+}
+
+.description {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 12px;
+}
+
+/* BIỂU ĐỒ */
+.chart-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.chart-card h3 {
+    margin-bottom: 18px;
+}
+
+.chart-card canvas {
+    width: 100% !important;
+    height: 250px !important;
+}
+
+/* ĐIỀU KHIỂN */
+.control-card {
+    margin-top: 18px;
+}
+
+.control-card h2 {
+    margin-bottom: 20px;
+}
+
+.mode-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 11px 18px;
+    font-weight: bold;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.mode-btn {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.mode-btn.active {
+    background: #2563eb;
+    color: white;
+}
+
+.device-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.device-item {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.device-item h3 {
+    margin-bottom: 12px;
+}
+
+.device-item p {
+    margin-bottom: 15px;
+}
+
+.device-btn {
+    color: white;
+    width: 100%;
+    background: #64748b;
+}
+
+.device-btn.on {
+    background: #16a34a;
+}
+
+.device-btn.off {
+    background: #64748b;
+}
+
+.control-note {
+    color: #64748b;
+    font-size: 12px;
+    margin-top: 16px;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    color: #64748b;
+    font-size: 12px;
+    padding: 25px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 700px) {
+    .sensor-grid,
+    .chart-grid,
+    .device-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .container {
+        padding: 0 12px;
+    }
+}

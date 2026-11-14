@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FIRE GUARD - Hệ thống báo cháy</title>
+
+    <!-- CSS giao diện -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Thư viện Chart.js vẽ biểu đồ -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Thư viện MQTT kết nối Broker -->
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- TIÊU ĐỀ -->
+    <header class="header">
+        <h1>🔥 FIRE GUARD</h1>
+        <p>Hệ thống giám sát khí gas và nhiệt độ qua MQTT</p>
+    </header>
+
+    <main class="container">
+
+        <!-- TRẠNG THÁI HỆ THỐNG -->
+        <section class="status-card">
+
+            <div class="status-line">
+                <strong>Trạng thái Broker:</strong>
+                <span id="brokerStatus" class="badge offline">
+                    Đang kết nối...
+                </span>
+            </div>
+
+            <div class="status-line">
+                <strong>Chế độ:</strong>
+                <span id="modeStatus">AUTO</span>
+            </div>
+
+            <div id="alertBox" class="alert normal">
+                ĐANG CHỜ DỮ LIỆU CẢM BIẾN
+            </div>
+
+        </section>
+
+        <!-- DỮ LIỆU CẢM BIẾN -->
+        <section class="sensor-grid">
+
+            <!-- KHÍ GAS -->
+            <div class="sensor-card">
+                <h3>🔥 Tín hiệu cảm biến MQ-2</h3>
+
+                <div class="sensor-value gas-value" id="gasValue">
+                    -- ADC
+                </div>
+
+                <p class="description">
+                    Giá trị ADC thô (0–4095), chưa quy đổi sang ppm
+                </p>
+
+                <span id="gasStatus" class="badge">
+                    Chưa có dữ liệu
+                </span>
+            </div>
+
+            <!-- NHIỆT ĐỘ -->
+            <div class="sensor-card">
+                <h3>🌡️ Nhiệt độ</h3>
+
+                <div class="sensor-value temp-value" id="tempValue">
+                    -- °C
+                </div>
+
+                <p class="description">
+                    Dữ liệu từ cảm biến DHT22
+                </p>
+
+                <span id="tempStatus" class="badge">
+                    Chưa có dữ liệu
+                </span>
+            </div>
+
+            <!-- ĐỘ ẨM -->
+            <div class="sensor-card">
+                <h3>💧 Độ ẩm</h3>
+
+                <div class="sensor-value humidity-value" id="humidityValue">
+                    -- %
+                </div>
+
+                <p class="description">
+                    Độ ẩm môi trường từ DHT22
+                </p>
+            </div>
+
+            <!-- CẢNH BÁO -->
+            <div class="sensor-card">
+                <h3>🚨 Trạng thái cảnh báo</h3>
+
+                <div class="sensor-value alarm-value" id="alarmValue">
+                    CHỜ DỮ LIỆU
+                </div>
+
+                <p class="description">
+                    Trạng thái hệ thống báo cháy
+                </p>
+            </div>
+
+        </section>
+
+        <!-- BIỂU ĐỒ THỜI GIAN THỰC -->
+        <section class="chart-grid">
+
+            <!-- BIỂU ĐỒ KHÍ GAS -->
+            <div class="chart-card">
+                <h3>Biểu đồ khí gas</h3>
+
+                <div class="chart-container">
+                    <canvas id="gasChart"></canvas>
+                </div>
+            </div>
+
+            <!-- BIỂU ĐỒ NHIỆT ĐỘ -->
+            <div class="chart-card">
+                <h3>Biểu đồ nhiệt độ</h3>
+
+                <div class="chart-container">
+                    <canvas id="tempChart"></canvas>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ĐIỀU KHIỂN THIẾT BỊ -->
+        <section class="control-card">
+
+            <h2>Điều khiển thiết bị</h2>
+
+            <div class="mode-control">
+
+                <span>Chế độ điều khiển:</span>
+
+                <button id="autoBtn" class="mode-btn active">
+                    AUTO
+                </button>
+
+                <button id="manualBtn" class="mode-btn">
+                    MANUAL
+                </button>
+
+            </div>
+
+            <div class="device-grid">
+
+                <!-- QUẠT -->
+                <div class="device-item">
+
+                    <h3>🌀 Quạt thông gió</h3>
+
+                    <p>
+                        Trạng thái:
+                        <strong id="fanStatus">OFF</strong>
+                    </p>
+
+                    <button id="fanBtn" class="device-btn" disabled>
+                        BẬT QUẠT
+                    </button>
+
+                </div>
+
+                <!-- MÁY BƠM -->
+                <div class="device-item">
+
+                    <h3>💧 Máy bơm</h3>
+
+                    <p>
+                        Trạng thái:
+                        <strong id="pumpStatus">OFF</strong>
+                    </p>
+
+                    <button id="pumpBtn" class="device-btn" disabled>
+                        BẬT MÁY BƠM
+                    </button>
+
+                </div>
+
+            </div>
+
+            <p class="control-note">
+                Chỉ điều khiển bằng tay khi hệ thống ở chế độ MANUAL.
+            </p>
+
+        </section>
+
+        <!-- CHÂN TRANG -->
+        <footer>
+            FIRE GUARD | ESP32 - MQ2 - DHT22 - MQTT - FreeRTOS
+        </footer>
+
+    </main>
+
+</div>
+
+<!-- Chạy JavaScript sau khi HTML đã được tải -->
+<script src="script.js"></script>
+
+</body>
+</html>
